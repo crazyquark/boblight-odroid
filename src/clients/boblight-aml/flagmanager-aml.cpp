@@ -16,16 +16,39 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
+#include <iostream> 
 
 #include "flagmanager-aml.h"
 #include "util/misc.h"
 #include "config.h"
 
+#define DEFAULT_CAPTURE_DEVICE "/dev/amvideocap0"
+
 using namespace std;
 
-void CFlagManagerAML::PostGetopt(int optind, int argc, char** argv)
+CFlagManagerAML::CFlagManagerAML()
 {
+  // extend the flags -d -> device
+  // -g -> only generate cmdline from possible found boblight addon settings.xml
+  m_flags += "d:g";
+  m_device = DEFAULT_CAPTURE_DEVICE;
+  generateCmdLine = false;
+}
+
+void CFlagManagerAML::ParseFlagsExtended(int& argc, char**& argv, int& c, char*& optarg)
+{
+  if (c == 'd') //devicename
+  {
+    if (optarg) //optional device
+    {
+      m_device = optarg;
+    }
+  }
+  
+  if (c == 'g') //generate cmdline
+  {
+    generateCmdLine = true;
+  }
 }
 
 void CFlagManagerAML::PrintHelpMessage()
@@ -39,5 +62,7 @@ void CFlagManagerAML::PrintHelpMessage()
   cout << "  -o  add libboblight option, syntax: [light:]option=value\n";
   cout << "  -l  list libboblight options\n";
   cout << "  -f  fork\n";
+  cout << "  -d  <device> (defaults to " << m_device << ")\n";
+  cout << "  -g  try to find the settings.xml file from boblight addon and return the cmdline to use its options\n";
   cout << "\n";
 }

@@ -1,6 +1,6 @@
 /*
  * boblight
- * Copyright (C) Bob  2009 
+ * Copyright (C) Bob  2009  
  * 
  * boblight is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -24,8 +24,13 @@
 class CFlagManagerAML : public CFlagManager
 {
   public:
-    void PostGetopt(int optind, int argc, char** argv);
+    CFlagManagerAML();
+    void ParseFlagsExtended(int& argc, char**& argv, int& c, char*& optarg);
+
     void PrintHelpMessage();
+    std::string m_device;           //device to open for amvideocap
+    bool generateCmdLine;
+
 };
 
 #endif //FLAGMANAGERAML
