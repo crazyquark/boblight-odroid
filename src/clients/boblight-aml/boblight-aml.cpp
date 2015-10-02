@@ -99,14 +99,14 @@ class CBoblightAddonSettings
    bool loadBoblightAddonSettings()
    {
      bool ret = false;
-     char *kodiHome = getenv(KODI_HOME_ENV_VAR);
+     //char *kodiHome = getenv(KODI_HOME_ENV_VAR);
      //fallback to custom settings file in case boblight addon is not installed
-     std::string settingsFile = "/storage/boblight-aml.xml";
+     std::string settingsFile = "/mnt/sdcard0/Android/data/org.xbmc.kodi/files/.kodi/addons/script.xbmc.boblight/resources/settings.xml";
 
-     if (kodiHome != NULL)
-     {
-       settingsFile = std::string(kodiHome) + "/.kodi/userdata/addon_data/script.xbmc.boblight/settings.xml";
-     }
+     //if (kodiHome != NULL)
+     //{
+     //  settingsFile = std::string(kodiHome) + "/.kodi/userdata/addon_data/script.xbmc.boblight/settings.xml";
+     //}
 
      FILE *fd = fopen(settingsFile.c_str(), "r");
 
@@ -445,7 +445,7 @@ int main(int argc, char *argv[])
 
    if (settings.m_settingsLoaded)
      cmdLine += " " + settings.getBoblightClientCmdLine();
-   fprintf(stdout, "%s", cmdLine.c_str());
+   fprintf(stdout, "%s\n", cmdLine.c_str());
    return 0;//exit
  }
 
